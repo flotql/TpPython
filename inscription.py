@@ -33,9 +33,11 @@ while continuer:
             erreur = False
         if switch == 1:
             erreur = True
-        # Definir age et categorie nouveau inscrit
+        # Definir age et categorie nouveau inscrit (+prints)
         nvCat = categorie(nvYear, nvMonth, nvDay)
         print("--------------")
+        print(nom)
+        print(prenom)
         print(nvCat)
         # Creation adresse mail
         nvEmail = eMail(prenom, nom)
