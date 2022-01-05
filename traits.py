@@ -1,5 +1,5 @@
 from datetime import date
-
+import csv
 def age(bd):
     atm = date.today()
     age = atm.year - bd.year - ((atm.month, atm.day) < (bd.month, bd.day))
@@ -18,3 +18,11 @@ def eMail(firstName,secondName):
     fName= firstName[0].upper()
     sName= secondName.lower()
     return '{}.{}@baton-rouge.fr'.format(fName,sName)
+
+# def save(leMail,laCat,leNom,lePrenom,lAge,dateInscrip):
+#     with open("donnees.csv","w") as file:
+#         informations = csv.writer(file)
+#         informations.writerow(leNom,lePrenom,lAge,laCat,leMail,dateInscrip)
+#
+#
+# informations.writerow(["Nom,Prénom", "Age", "Catégorie", "eMail", "Date d'inscription"])
