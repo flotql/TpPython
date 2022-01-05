@@ -1,22 +1,12 @@
 import re
 from datetime import date
+import csv
 from traits import *
 
 continuer = True
 
 # Donnees inscriptions
-
 while continuer:
-    # Nombre d'inscription
-    nb = input("Combien d'inscriptions devez-vous rentrer? \n")
-    try:
-        nb = int(nb)
-    except ValueError:
-        print("Rentrer le nombre en chiffre")
-    else:
-        continuer = False
-# Inscriptions
-for _ in range(nb):
     # Nom / Prenom
     nom = input("Ecrire le nom ici:\n")
     prenom = input("Ecrire le prenom ici:\n")
@@ -45,15 +35,16 @@ for _ in range(nb):
             erreur = True
         # Definir age et categorie nouveau inscrit
         nvCat = categorie(nvYear, nvMonth, nvDay)
+        print("--------------")
         print(nvCat)
         # Creation adresse mail
         nvEmail = eMail(prenom, nom)
         print(nvEmail)
-        # suivant = input("avez-vous d'autres inscriptions? y/n \n") V3 !!!!!
-        # if suivant == "n":
-        #     continuer = False
-
-
+        print("--------------")
+        # Demande reiteration inscription
+        suivant = input("avez-vous d'autres inscriptions? y/n \n")
+        if suivant == "n":
+            continuer = False
 
 
 
