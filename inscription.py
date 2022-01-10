@@ -67,5 +67,10 @@ while continuer:
 
 
 
+comptage()
 
-
+#Crée un nouveau fichier pour le comptage
+#dans traits faire le doublon
+# trie par catégorie
+#indique le nombre d'inscrit
+#le tout dans un nouveau csv déjà present

@@ -41,3 +41,19 @@ def fichierCSV():
             dw.writeheader()
 
 
+def comptage():
+    with open('inscriptions\\'+tst) as file:
+        writer = []
+        compte = {"Poussin": 0, "Cadet": 0, "Junior": 0, "Semi-pro": 0, "Pro": 0}
+        lec = csv.reader(file, delimiter=";")
+        for i in lec:
+            print(i)
+            if len(i) != 0:
+                if i[2] != 'Categorie':
+                    compte[i[2]] += 1
+                    writer.append(i)
+    print(writer)
+    return writer
+
+def doublon(writer):
+    for i in writer:
