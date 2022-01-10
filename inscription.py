@@ -23,6 +23,18 @@ while continuer:
             print("l'année doit comporter 4 chiffres")
             erreur = True
             switch = 1
+        if (len(nvMonth) == 1 or len(nvMonth) == 2) and (len(nvDay) == 1 or len(nvDay) == 2):
+            erreur = False
+        else:
+            print("le moi et le jour doivent comporter 1 ou 2 chiffres")
+            erreur = True
+            switch = 1
+        if int(nvMonth) != 0 and int(nvDay) != 0:
+            erreur = False
+        else:
+            print("le moi ou le jour 0 n'existe pas")
+            erreur = True
+            switch = 1
         try:
             nvYear = int(nvYear)
             nvMonth = int(nvMonth)
@@ -33,20 +45,23 @@ while continuer:
             erreur = False
         if switch == 1:
             erreur = True
-        # Definir age et categorie nouveau inscrit (+prints)
-        nvCat = categorie(nvYear, nvMonth, nvDay)
-        print("--------------")
-        print(nom)
-        print(prenom)
-        print(nvCat)
-        # Creation adresse mail
-        nvEmail = eMail(prenom, nom)
-        print(nvEmail)
-        print("--------------")
-        # Demande reiteration inscription
-        suivant = input("avez-vous d'autres inscriptions? y/n \n")
-        if suivant == "n":
-            continuer = False
+    # Definir age et categorie nouveau inscrit (+prints)
+    nvCat = categorie(nvYear, nvMonth, nvDay)
+    print("--------------")
+    print(nom)
+    print(prenom)
+    print(nvCat)
+    # Creation adresse mail
+    nvEmail = eMail(prenom, nom)
+    print(nvEmail)
+    print("--------------")
+    # Ajout dans fichier csv
+    fichierCSV()
+    ajout(nvEmail,nvCat,nom,prenom)
+    # Demande reiteration inscription
+    suivant = input("avez-vous d'autres inscriptions? y/n \n")
+    if suivant == "n":
+        continuer = False
 
 
 
