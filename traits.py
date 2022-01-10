@@ -1,8 +1,13 @@
 from datetime import date
 import csv
+import os.path
+
+dt = date.today()
+tst = "inscrits-" + str(dt) + ".csv"
+headerList = ["Nom", "Prenom", "Categorie", "Mail"]
+
 def age(bd):
-    atm = date.today()
-    age = atm.year - bd.year - ((atm.month, atm.day) < (bd.month, bd.day))
+    age = dt.year - bd.year - ((dt.month, dt.day) < (bd.month, bd.day))
     return age
 
 def categorie(year,month,day):
@@ -19,10 +24,16 @@ def eMail(firstName,secondName):
     sName= secondName.lower()
     return '{}.{}@baton-rouge.fr'.format(fName,sName)
 
-# def save(leMail,laCat,leNom,lePrenom,lAge,dateInscrip):
-#     with open("donnees.csv","w") as file:
-#         informations = csv.writer(file)
-#         informations.writerow(leNom,lePrenom,lAge,laCat,leMail,dateInscrip)
-#
-#
-# informations.writerow(["Nom,Prénom", "Age", "Catégorie", "eMail", "Date d'inscription"])
+
+def ajout(leMail,laCat,leNom,lePrenom):
+    with open(tst,"a") as file:
+        informations = csv.writer(file, delimiter=';')
+        informations.writerow([leNom,lePrenom,laCat,leMail])
+
+# verifier si le csv du jour est cree
+def fichierCSV():
+    # Si oui ajouter les donnees en utilisant la fonction
+    if not os.path.isfile(tst):
+        with open(tst, "a") as file:
+            dw = csv.DictWriter(file, delimiter=';', fieldnames=headerList)
+            dw.writeheader()

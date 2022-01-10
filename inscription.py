@@ -23,6 +23,18 @@ while continuer:
             print("l'année doit comporter 4 chiffres")
             erreur = True
             switch = 1
+        if (len(nvMonth) == 1 or len(nvMonth) == 2) and (len(nvDay) == 1 or len(nvDay) == 2):
+            erreur = False
+        else:
+            print("le moi et le jour doivent comporter 1 ou 2 chiffres")
+            erreur = True
+            switch = 1
+        if nvYear == 0000 or nvMonth == 0 or nvDay == 0:
+            erreur = False
+        else:
+            print("l'annee, le moi ou le jour 0 n'existe pas")
+            erreur = True
+            switch = 1
         try:
             nvYear = int(nvYear)
             nvMonth = int(nvMonth)
@@ -43,6 +55,9 @@ while continuer:
     nvEmail = eMail(prenom, nom)
     print(nvEmail)
     print("--------------")
+    # Ajout dans fichier csv
+    fichierCSV()
+    ajout(nvEmail,nvCat,nom,prenom)
     # Demande reiteration inscription
     suivant = input("avez-vous d'autres inscriptions? y/n \n")
     if suivant == "n":
