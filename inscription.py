@@ -33,20 +33,20 @@ while continuer:
             erreur = False
         if switch == 1:
             erreur = True
-        # Definir age et categorie nouveau inscrit (+prints)
-        nvCat = categorie(nvYear, nvMonth, nvDay)
-        print("--------------")
-        print(nom)
-        print(prenom)
-        print(nvCat)
-        # Creation adresse mail
-        nvEmail = eMail(prenom, nom)
-        print(nvEmail)
-        print("--------------")
-        # Demande reiteration inscription
-        suivant = input("avez-vous d'autres inscriptions? y/n \n")
-        if suivant == "n":
-            continuer = False
+    # Definir age et categorie nouveau inscrit (+prints)
+    nvCat = categorie(nvYear, nvMonth, nvDay)
+    print("--------------")
+    print(nom)
+    print(prenom)
+    print(nvCat)
+    # Creation adresse mail
+    nvEmail = eMail(prenom, nom)
+    print(nvEmail)
+    print("--------------")
+    # Demande reiteration inscription
+    suivant = input("avez-vous d'autres inscriptions? y/n \n")
+    if suivant == "n":
+        continuer = False
 
 
 
