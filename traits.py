@@ -39,3 +39,5 @@ def fichierCSV():
         with open('inscriptions\\'+tst, "a") as file:
             dw = csv.DictWriter(file, delimiter=';', fieldnames=headerList)
             dw.writeheader()
+
+
