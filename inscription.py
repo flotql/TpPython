@@ -29,10 +29,10 @@ while continuer:
             print("le moi et le jour doivent comporter 1 ou 2 chiffres")
             erreur = True
             switch = 1
-        if nvYear == 0000 or nvMonth == 0 or nvDay == 0:
+        if int(nvMonth) != 0 and int(nvDay) != 0:
             erreur = False
         else:
-            print("l'annee, le moi ou le jour 0 n'existe pas")
+            print("le moi ou le jour 0 n'existe pas")
             erreur = True
             switch = 1
         try:
