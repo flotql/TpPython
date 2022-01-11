@@ -40,20 +40,46 @@ def fichierCSV():
             dw = csv.DictWriter(file, delimiter=';', fieldnames=headerList)
             dw.writeheader()
 
-
+# csv en list
 def comptage():
     with open('inscriptions\\'+tst) as file:
         writer = []
         compte = {"Poussin": 0, "Cadet": 0, "Junior": 0, "Semi-pro": 0, "Pro": 0}
         lec = csv.reader(file, delimiter=";")
         for i in lec:
-            print(i)
             if len(i) != 0:
                 if i[2] != 'Categorie':
                     compte[i[2]] += 1
                     writer.append(i)
-    print(writer)
-    return writer
+    return writer, compte
 
+# suppr les doublons
 def doublon(writer):
-    for i in writer:
+    writer2 = {}
+    for i,val in enumerate(writer):
+        writer2[writer[i][3]] = [writer[i][0],writer[i][1],writer[i][2],writer[i][3]]
+    return list(writer2.values())
+
+# tri par cat et nbr dans cat
+def leTri(writer2,compte):
+    compteOrder = sorted(compte.items(), key=lambda x: x[1], reverse=True)
+    writerFinal = []
+    for i in compteOrder:
+        for j,val in enumerate(writer2):
+            if writer2[j][2] == i[0]:
+                writerFinal.append(writer2[j])
+    return writerFinal
+
+# creation fichier final
+def fichierCsvFinal():
+    if not os.path.isfile('inscriptions\\'+'inscrits_total.csv'):
+        with open('inscriptions\\'+'inscrits_total.csv', "a") as file:
+            dw = csv.DictWriter(file, delimiter=';', fieldnames=headerList)
+            dw.writeheader()
+
+# ajout données dans fichier final
+def ajoutFinal(writerFinal):
+    with open('inscriptions\\'+'inscrits_total.csv',"a") as file:
+        informations = csv.writer(file, delimiter=';')
+        for i,val in enumerate(writerFinal):
+            informations.writerow(writerFinal[i])
