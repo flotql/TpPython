@@ -1,6 +1,7 @@
 from datetime import date
 import csv
 import os.path
+import argparse
 
 dt = date.today()
 tst = "inscrits-" + str(dt) + ".csv"
@@ -83,3 +84,22 @@ def ajoutFinal(writerFinal):
         informations = csv.writer(file, delimiter=';')
         for i,val in enumerate(writerFinal):
             informations.writerow(writerFinal[i])
+
+# Choix csv par moi oui jour
+def leChoix():
+    choix = argparse.ArgumentParser()
+    choix.add_argument("-m", "--month", type=str, help="Choix CSV du moi")
+    choix.add_argument("-d", "--day", type=str, help="Choix CSV d'un jour")
+    args = choix.parse_args()
+    # si choix par moi, prendre tous les fichiers du moi indiquer
+    if args.month:
+        with open("inscriptions\\"+"inscrits-"+args.month+"csv", "x") as file:
+            inscritsMoi = csv.writer(file, delimiter=";")
+            inscritsMoi.writerow()
+    # si choix par jour, prendre le fichier du jour indiquer
+    if args.day:
+        with open("inscriptions\\"+"inscrits-"+args.day+"csv", "x") as file2:
+            inscritsJour = csv.writer(file2,delimiter=";")
+            inscritsJour.writerow(args.day)
+
+
