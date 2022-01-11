@@ -96,10 +96,12 @@ def leChoix():
         with open("inscriptions\\"+"inscrits-"+args.month+"csv", "x") as file:
             inscritsMoi = csv.writer(file, delimiter=";")
             inscritsMoi.writerow()
+            print("le fichier {} a bien  été créé".format(args.month))
     # si choix par jour, prendre le fichier du jour indiquer
     if args.day:
         with open("inscriptions\\"+"inscrits-"+args.day+"csv", "x") as file2:
             inscritsJour = csv.writer(file2,delimiter=";")
             inscritsJour.writerow(args.day)
+            print("le fichier {} a bien  été créé".format(args.day))
 
 
