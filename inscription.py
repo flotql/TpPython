@@ -1,13 +1,13 @@
 import re
-from datetime import date
+from datetime import date,datetime
 import csv
 from traits import *
 
 continuer = True
 
 choix = argparse.ArgumentParser()
-choix.add_argument("-a", "--add", type=, help="Ajout d'inscrits du jour")
-choix.add_argument("-d", "--display", type=str, help="Choix CSV d'un jour")
+choix.add_argument("--add",help="Ajout d'inscrits du jour", action="store_true")
+choix.add_argument("-d", "--display", help="Choix CSV d'un jour", action="store_true")
 args = choix.parse_args()
 if args.add:
     # Donnees inscriptions
@@ -67,12 +67,25 @@ if args.add:
         suivant = input("avez-vous d'autres inscriptions? y/n \n")
         if suivant == "n":
             continuer = False
+if args.display:
+    choix = int(input("Si vous souhaitez afficher les inscrits du moi, FAITES 1,\nSi vous souhaitez afficher les inscrits d'aujourd'hui, FAITES 2\nEt pour ceux d'un jour particulier, FAITES 3\n"))
 
-
-
-
-
-comptage()
-
-# faire le cas d'ajout d'inscrits
-# faire le cas de vérification de fichier ( jour ou total du moi)
+    if choix == 1:
+        csvList, nombreCat = comptage()
+        listNoDoub = doublon(csvList)
+        triList = leTri(listNoDoub, nombreCat)
+        fichierCsvFinal()
+        ajoutFinal(triList)
+        for i in triList:
+            print(" ".join(i),end="\n\n")
+    if choix == 2:
+        with open('inscriptions\\'+tst, "r") as f:
+            for line in f:
+                print(line)
+    if choix == 3:
+        anneeCSV = datetime.today().year
+        moiCSV = input("Ecrire le moi:\n")
+        jourCSV = input("Ecrire le jour :\n")
+        with open('inscriptions\\'+"inscrits-{}-{}-{}.csv".format(anneeCSV,moiCSV,jourCSV), "r") as f2:
+            for line2 in f2:
+                print(line2)

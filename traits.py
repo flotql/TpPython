@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date,datetime
 import csv
 import os.path
 import argparse
@@ -43,16 +43,18 @@ def fichierCSV():
 
 # csv en list
 def comptage():
-    with open('inscriptions\\'+tst) as file:
-        writer = []
-        compte = {"Poussin": 0, "Cadet": 0, "Junior": 0, "Semi-pro": 0, "Pro": 0}
-        lec = csv.reader(file, delimiter=";")
-        for i in lec:
-            if len(i) != 0:
-                if i[2] != 'Categorie':
-                    compte[i[2]] += 1
-                    writer.append(i)
-    return writer, compte
+    for i,files in enumerate(os.listdir('inscriptions\\')):
+        if str(date.today().year) in files:
+            with open('inscriptions\\'+files) as file:
+                writer = []
+                compte = {"Poussin": 0, "Cadet": 0, "Junior": 0, "Semi-pro": 0, "Pro": 0}
+                lec = csv.reader(file, delimiter=";")
+                for i in lec:
+                    if len(i) != 0:
+                        if i[2] != 'Categorie':
+                            compte[i[2]] += 1
+                            writer.append(i)
+            return writer, compte
 
 # suppr les doublons
 def doublon(writer):
@@ -84,24 +86,3 @@ def ajoutFinal(writerFinal):
         informations = csv.writer(file, delimiter=';')
         for i,val in enumerate(writerFinal):
             informations.writerow(writerFinal[i])
-
-# Choix csv par moi oui jour
-def leChoix():
-    choix = argparse.ArgumentParser()
-    choix.add_argument("-m", "--month", type=str, help="Choix CSV du moi")
-    choix.add_argument("-d", "--day", type=str, help="Choix CSV d'un jour")
-    args = choix.parse_args()
-    # si choix par moi, prendre tous les fichiers du moi indiquer
-    if args.month:
-        with open("inscriptions\\"+"inscrits-"+args.month+"csv", "x") as file:
-            inscritsMoi = csv.writer(file, delimiter=";")
-            inscritsMoi.writerow()
-            print("le fichier {} a bien  été créé".format(args.month))
-    # si choix par jour, prendre le fichier du jour indiquer
-    if args.day:
-        with open("inscriptions\\"+"inscrits-"+args.day+"csv", "x") as file2:
-            inscritsJour = csv.writer(file2,delimiter=";")
-            inscritsJour.writerow(args.day)
-            print("le fichier {} a bien  été créé".format(args.day))
-
-
