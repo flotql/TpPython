@@ -116,6 +116,8 @@ if args.display:
                     print("Indiquer la date en chiffre")
                 else:
                     erreur = False
-                with open('inscriptions\\'+"inscrits-{}-{}-{}.csv".format(anneeCSV,moiCSV,jourCSV), "r") as f2:
-                    for line2 in f2:
-                        print(line2)
+                if switch == 1:
+                    erreur = True
+        with open('inscriptions\\'+"inscrits-{}-{}-{}.csv".format(anneeCSV,moiCSV,jourCSV), "r") as f2:
+            for line2 in f2:
+                print(line2)
