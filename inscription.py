@@ -1,12 +1,13 @@
 import re
 from datetime import date,datetime
+from calendar import monthrange
 import csv
 from traits import *
 
 continuer = True
 
 choix = argparse.ArgumentParser()
-choix.add_argument("--add",help="Ajout d'inscrits du jour", action="store_true")
+choix.add_argument("-a","--add",help="Ajout d'inscrits du jour", action="store_true")
 choix.add_argument("-d", "--display", help="Choix CSV d'un jour", action="store_true")
 args = choix.parse_args()
 if args.add:
@@ -28,16 +29,16 @@ if args.add:
                 print("l'année doit comporter 4 chiffres")
                 erreur = True
                 switch = 1
-            if (len(nvMonth) == 1 or len(nvMonth) == 2) and (len(nvDay) == 1 or len(nvDay) == 2):
+            if int(nvMonth) >= 1 and int(nvMonth) <= 12:
                 erreur = False
             else:
-                print("le moi et le jour doivent comporter 1 ou 2 chiffres")
+                print("il n'y a que 12 mois dans l'année (rentrez une valeur entre 1 et 12)")
                 erreur = True
                 switch = 1
-            if int(nvMonth) != 0 and int(nvDay) != 0:
+            if int(nvDay) > 0 and int(nvDay) <= nombreJours(nvYear,nvMonth,nvDay):
                 erreur = False
             else:
-                print("le moi ou le jour 0 n'existe pas")
+                print("Il y a entre 1 et {}".format(nombreJours(nvYear,nvMonth,nvDay)))
                 erreur = True
                 switch = 1
             try:
@@ -67,25 +68,54 @@ if args.add:
         suivant = input("avez-vous d'autres inscriptions? y/n \n")
         if suivant == "n":
             continuer = False
-if args.display:
-    choix = int(input("Si vous souhaitez afficher les inscrits du moi, FAITES 1,\nSi vous souhaitez afficher les inscrits d'aujourd'hui, FAITES 2\nEt pour ceux d'un jour particulier, FAITES 3\n"))
 
-    if choix == 1:
-        csvList, nombreCat = comptage()
-        listNoDoub = doublon(csvList)
-        triList = leTri(listNoDoub, nombreCat)
-        fichierCsvFinal()
-        ajoutFinal(triList)
-        for i in triList:
-            print(" ".join(i),end="\n\n")
-    if choix == 2:
-        with open('inscriptions\\'+tst, "r") as f:
-            for line in f:
-                print(line)
-    if choix == 3:
-        anneeCSV = datetime.today().year
-        moiCSV = input("Ecrire le moi:\n")
-        jourCSV = input("Ecrire le jour :\n")
-        with open('inscriptions\\'+"inscrits-{}-{}-{}.csv".format(anneeCSV,moiCSV,jourCSV), "r") as f2:
-            for line2 in f2:
-                print(line2)
+if args.display:
+    erreurChoix = True
+    erreurDate = True
+    while erreurChoix:
+        choix = int(input("Si vous souhaitez afficher les inscrits du moi, FAITES 1,\nSi vous souhaitez afficher les inscrits d'aujourd'hui, FAITES 2\nEt pour ceux d'un jour particulier, FAITES 3\n"))
+        if choix == 1 and choix == 2 and choix == 3:
+            erreurChoix = True
+        else:
+            print("le choix ne peut être que 1, 2 ou 3")
+            erreurChoix = False
+        if choix == 1:
+            csvList, nombreCat = comptage()
+            listNoDoub = doublon(csvList)
+            triList = leTri(listNoDoub, nombreCat)
+            fichierCsvFinal()
+            ajoutFinal(triList)
+            for i in triList:
+                print(" ".join(i),end="\n\n")
+        if choix == 2:
+            with open('inscriptions\\'+tst, "r") as f:
+                for line in f:
+                    print(line)
+        while erreurDate:
+            if choix == 3:
+                anneeCSV = datetime.today().year
+                moiCSV = input("Ecrire le moi:\n")
+                jourCSV = input("Ecrire le jour :\n")
+                if int(moiCSV) >= 1 and int(moiCSV) <= 12:
+                    erreur = False
+                else:
+                    print("il n'y a que 12 mois dans l'année (rentrez une valeur entre 1 et 12)")
+                    erreur = True
+                    switch = 1
+                if int(jourCSV) > 0 and int(jourCSV) <= nombreJours(anneeCSV, moiCSV, jourCSV):
+                    erreur = False
+                else:
+                    print("Il y a entre 1 et {}".format(nombreJours(anneeCSV, moiCSV, jourCSV)))
+                    erreur = True
+                    switch = 1
+                try:
+                    anneeCSV = int(nvYear)
+                    moiCSV = int(moiCSV)
+                    jourCSV = int(jourCSV)
+                except ValueError:
+                    print("Indiquer la date en chiffre")
+                else:
+                    erreur = False
+                with open('inscriptions\\'+"inscrits-{}-{}-{}.csv".format(anneeCSV,moiCSV,jourCSV), "r") as f2:
+                    for line2 in f2:
+                        print(line2)

@@ -2,6 +2,8 @@ from datetime import date,datetime
 import csv
 import os.path
 import argparse
+from calendar import monthrange
+
 
 dt = date.today()
 tst = "inscrits-" + str(dt) + ".csv"
@@ -86,3 +88,7 @@ def ajoutFinal(writerFinal):
         informations = csv.writer(file, delimiter=';')
         for i,val in enumerate(writerFinal):
             informations.writerow(writerFinal[i])
+
+def nombreJours(annee,moi,jour):
+   totalNbJours = (datetime.datetime(annee,moi,jour).replace(month = datetime.datetime(annee,moi,jour).month % 12 +1, day = 1)-datetime.timedelta(days=1)).day
+   return totalNbJours
